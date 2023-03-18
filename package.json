@@ -24,6 +24,7 @@
     "moment": "^2.29.4"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.16",
     "@wdio/local-runner": "^8.5.5",
     "@wdio/mocha-framework": "^8.4.0",
     "@wdio/spec-reporter": "^8.4.0",
