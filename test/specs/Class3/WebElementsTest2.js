@@ -1,221 +1,210 @@
-const { expect } = require("chai");
+/**
+ * WebElements:
+ *      1. InputBox (TextBox)
+ *      2. Button
+ *      3. Text
+ *      4. Image
+ *      5. RadioButton
+ *      6. CheckBox
+ *      7. Dropdown
+ *      8. Link (HyperLink)
+ * 
+ * 
+ * Interactions:
+ *      1. Type
+ *      2. Click
+ *      3. is webElement selected
+ *      4. is webElement enabled
+ *      5. is webElement displayed
+ */
 
-describe('basic locator strategies', () => {
+/**
+ * Document Object Model (DOM)
+ * 
+ * Code -> Generates a html document (DOM) -> makes the webpage
+ * 
+ * <html>
+ *      <head>
+ *          ...
+ *          ...
+ *      </head>
+ *      <body>
+ *          ...
+ *          ...
+ *      </body>
+ * </html>
+ * 
+ * 
+ * <tag1>           // starting of tag1
+ * 
+ * </tag1>          // closing of tag1
+ * Note: tagNames CANNOT have spaces
+ * 
+ * eg: html, body, div, script, input, form, link, a, button
+ * 
+ * 
+ * <tag1 attr1="value1" attr2="value2" attr3 attr4="value four", attr5="5">
+ * 
+ * tag -> tag1
+ * attributes of tag1 -> attr1, attr2, attr3, attr4, attr5
+ * Note: attributeNames CANNOT have spaces
+ * 
+ * value of attr1 = "value1"
+ * value of attr2 = "value2"
+ * value of attr3 = none
+ * value of attr4 = "value four"
+ * value of attr5 = "5"
+ * 
+ * 
+ * <input type="text" class="inputtext _55r1 _6luy" name="email" id="email" data-testid="royal_email" 
+ *                  placeholder="Email or phone number" autofocus="1" aria-label="Email or phone number">
+ * 
+ * tag -> input
+ * 
+ * attributes of input-tag
+ *  type = "text"
+ *  class = "inputtext _55r1 _6luy"
+ *  name = "email"
+ *  id = "email"
+ *  data-testid = "royal_email"
+ *  placeholder = "Email or phone number"
+ *  autofocus = "1"
+ *  aria-label = "Email or phone number"
+ * 
+ * 
+ * <tag1 attr1="value1" attr2="value2" attr3 attr4="value four", attr5="5">
+ *      <tag2 attr11="value11" attr12="value twelve">
+ *          "text value"
+ *      </tag2>
+ *      ...
+ *      ...
+ *      <tag3 attr21="value21" attr22="value twenty two">
+ *          "text value again"
+ *      </tag3>
+ * </tag1>
+ * 
+ * text-value of tag2 = "text value"
+ * text-value of tag3 = "text value again"
+ * text-value of tag1 = none
+ * 
+ * <button value="1" class="_42ft _4jy0 _6lth _4jy6 _4jy1 selected _51sy" name="login" data-testid="royal_login_button" type="submit" id="u_0_5_zk">
+ *      Log In
+ * </button>
+ * 
+ * text-value of button-tag = "Log In"
+ */
 
-    it('Locator strategy : Using other attribute instead id-attribute and text-value', async () => {
-        /**
-         * 1. Launch facebook.com
-         * 2. Type (abcd@gmail.com) in the Email or phone number field/element
-         * 3. Type (abcd@1234) in the Password field/element
-         * 4. Click the Log-in button
-         */
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
+/**
+ * Chropath extension:
+ * 
+ * https://chrome.google.com/webstore/detail/chropath/ljngjbnaijcbncmcnjfhigebomdlkcjo
+ * 
+ * helps us to write locators and also helps to verify custom locators
+ * 
+ * locators: way to find a webElement in an unique way.
+ * 
+ */
 
-        // 2. Type (abcd@gmail.com) in the Email or phone number field/element
-        const loginEmailElement = await $('input[name=email]')
-            // $(findElement) has to find a webElement where tagName=input which has attr(name) with value(email)
-        await loginEmailElement.setValue('abcd@gmail.com');
+// Steps to find and interact with a webElement
+/**
+ * 1. Find the unique locator strategy to find webElement in the DOM
+ * 2. Based on the locator strategy, use corresponding code to find the webElement
+ * 3. once the webElement is found, interact with webElement
+ */
 
-        // 3. Type (abcd@1234) in the Password field/element
-        const loginPasswordElement = await $('input[data-testid=royal_pass]');
-            // $(findElement) has to find a webElement where tagName=input which has attr(data-testid) with value(royal_pass)
-        await loginPasswordElement.setValue('abcd@1234');
-        
-        // 4. Click the Log-in button
-        const logInBtn = await $('button=Log In');
-            // $(findElement) has to find a webElement where tagName=button which has textValue = 'Log In'
-        await logInBtn.click();
+// To find webElement
+//      function: $
 
-        await browser.pause(10000);
+// Functions to interact with webElement:
+/**
+ * 
+ * 
+ * 1. type
+ *      function: setValue()
+ *      input: String-input which is the text that we want to type
+ * 2. click
+ *      function: click()
+ * 3. to find if webElement is enabled
+ *      function: isEnabled()
+ *      if the webElement is enabled
+ *          function returns true
+ *      otherwise
+ *          function returns false
+ * 4. to find if a webElement is selected
+ *      function: isSelected()
+ *      if the webElement is selected
+ *          function returns true
+ *      otherwise
+ *          function returns false
+ * 5. to find if a webElement is displayed
+ *      function: isDisplayed()
+ *      if the webElement is displayed
+ *          function returns true
+ *      otherwise
+ *          function returns false     
+ *      
+ */
 
-    })
+// Locator strategies:
+/**
+ * Locators: way to reach/find a webElement in DOM
+ * 
+ * 1. Using id-attribute
+ *      id-attribute is always going to be unique for the webpage (in the DOM)
+ *      To check if id-value is unique, In chropath -> //*[@id="id-value"]
+ * 
+ *      const webElement = await $('#idValue');
+ * 
+ * 2. Using other attribute's value instead id-attribute
+ *      To check if any-attribute has unique value, In chropath -> //tagName[@attrName="attrValue"]
+ *      Note: Attribute's value cannot have spaces (If want to use attribute's value with spaces then refer xpath)
+ *      
+ *      const webElement = await $('tagName[attrName=attrValue]');
+ * 
+ * 3. Using text-Value
+ *      To check if the text-value with webElement is unique, In chropath -> //tagName[text() = 'text value']
+ * 
+ *      const webElement = await $('tagName=text value');
+ * 
+ * 4. Using partial attribute's value
+ *      To check if the partial attribute's value is unique, In chropath -> //tagName[contains(@attrName, 'partialAttrValue')]
+ *      Note: Attribute's partial value cannot have spaces (If want to use attribute's partial value with spaces then refer xpath)
+ * 
+ *      const webElement = await $('tagName[attrName*=partialAttrValue]');
+ * 
+ * 5. Using partial text-value
+ *      To check if the partial text value is unique, In chropath -> //tagName[contains(text(), 'partial Text Value')]
+ * 
+ *      const webElement = await $('tagName*=partial text value');
+ * 
+ * 6. Using link-text
+ *      To check if the link text is unique, In chropath -> //a[text()='Link text']
+ * 
+ *      const webElement = await $('=Link text');
+ * 
+ * 7. Using partial link-text
+ *      To check if the link partial-text is unique, In chropath -> //a[contains(text() , 'partial link text')]
+ * 
+ *      const webElement = await $('*=partial link text');
+ * 
+ * 8. Using tagName
+ *      To check if the tagName with webElement is unique, In chropath -> //tagName
+ * 
+ *      const webElement = await $('<tagName>')
+ * 
+ */
 
-    it('Locator strategy : Using partial attribute Value and text Value', async () => {
-        /**
-         * 1. Launch facebook.com
-         * 2. Click on Create New Account
-         * 3. Enter 'John' as Firstname
-         * 4. Enter 'Reed' as Lastname
-         * 5. Click Sign Up button
-         */
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
-
-        // 2. Click on Create New Account
-        const createAccountBtn = await $('a*=ccoun');
-        await createAccountBtn.click();
-
-        // 3. Enter 'John' as Firstname
-        const firstNameInput = await $('input[name*=first]');
-        await firstNameInput.setValue('John');
-
-        // 4. Enter 'Reed' as Lastname
-        const lastNameInput = await $('input[aria-label*=Last]');
-        await lastNameInput.setValue('Reed');
-
-        // 5. Click Sign Up button
-        //button[contains(@name, 'ubmi')]
-        const signUpBtn = await $('button[name*=ubmi]');
-        await signUpBtn.click();
-
-        await browser.pause(15000);
-
-
-
-    })
-
-    it('Locator strategy : Using link-text and partial-link-text', async () => {
-        /**
-         * 1. Launch facebook.com
-         * 2. Click on Messenger
-         * 3. Click on "Forgot your password?""
-         */
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
-
-        // 2. Click on Messenger
-        const messengerLink = await $('=Messenger');
-        await messengerLink.click();
-
-        await browser.pause(2000);
-
-        // 3. Click on "Forgot your password?"
-        const fypLink = await $('*=Forgot');
-        await fypLink.click();
-
-    })
-
-    it('Locator strategy : Using tagName', async () => {
-        /**
-         * 1. Launch facebook.com
-         * 2. Type (abcd@gmail.com) in the Email or phone number field/element
-         * 3. Type (abcd@1234) in the Password field/element
-         * 4. Click the Log-in button
-         */
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
-
-        // 2. Type (abcd@gmail.com) in the Email or phone number field/element
-        const loginEmailElement = await $('input[name=email]')
-            // $(findElement) has to find a webElement where tagName=input which has attr(name) with value(email)
-        await loginEmailElement.setValue('abcd@gmail.com');
-
-        // 3. Type (abcd@1234) in the Password field/element
-        const loginPasswordElement = await $('input[data-testid=royal_pass]');
-            // $(findElement) has to find a webElement where tagName=input which has attr(data-testid) with value(royal_pass)
-        await loginPasswordElement.setValue('abcd@1234');
-        
-        // 4. Click the Log-in button
-        const logInBtn = await $('<button>');
-            // $(findElement) has to find a webElement where tagName=button
-        await logInBtn.click();
-
-        await browser.pause(15000);
-
-    })
-
-    // Verify login fields and button are enabled when user lands on facebook.com
-    /**
-     * 1. Launch facebook.com
-     * 2. Verify loginEmail field is enabled
-     * 3. Verify loginPassword field is enabled
-     * 4. Verify login button is enabled
-     */
-    it('Verify login fields and button are enabled when user lands on facebook.com', async () => {
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
-
-        // 2. Verify loginEmail field is enabled
-        const loginEmail = await $('#email');
-        const isLoginEmailEnabled = await loginEmail.isEnabled();
-        expect(isLoginEmailEnabled, 'Login email is NOT enabled').to.be.true;
-
-        // 3. Verify loginPassword field is enabled
-        const loginPassword = await $('input[aria-label=Password]');
-        const isLoginPasswordEnabled = await loginPassword.isEnabled();
-        expect(isLoginPasswordEnabled, 'Login password is NOT enabled').to.be.true;
-
-        // 4. Verify login button is enabled
-        const loginBtn = await $('button*=Log');
-        const isLoginBtnEnabled = await loginBtn.isEnabled();
-        expect(isLoginBtnEnabled, 'Login button is NOT enabled').to.be.true;
-
-    });
-
-    // Verify no gender is selected on sign up
-    /**
-     * 1. Launch facebook.com
-     * 2. Click Create new account button
-     * 3. Verify female radio button is not selected
-     * 4. Verify male radio button is not selected
-     * 5. Verify custom radio button is not selected
-     */
-    it('Verify no gender is selected on sign up', async () => {
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
-
-        // 2. Click Create new account button
-        const createAccountBtn = await $('a*=ccoun');
-        await createAccountBtn.click();
-
-        await browser.pause(2000);
-
-        // 3. Verify female radio button is not selected
-        const femaleRadioBtn = await $('input[value="1"]');
-        const isFemaleBtnSelected = await femaleRadioBtn.isSelected();
-        expect(isFemaleBtnSelected, 'Female radio button is selected').to.be.false;
-
-        // 4. Verify male radio button is not selected
-        const maleRadioBtn = await $('input[value="2"]');
-        const isMaleBtnSelected = await maleRadioBtn.isSelected();
-        expect(isMaleBtnSelected, 'Male radio button is selected').to.be.false;
-
-        // 5. Verify custom radio button is not selected
-        const customRadioBtn = await $('input[value="-1"]');
-        const isCustomBtnSelected = await customRadioBtn.isSelected();
-        expect(isCustomBtnSelected, 'Custom radio button is selected').to.be.false;
-    
-    });
-
-    // Verify user lands on forgot your password page after clicking the link
-    /**
-     * 1. Launch facebook.com
-     * 2. Click "Forgot password?"
-     * 3. Verify user lands on forgot your password page
-     */
-    it('Verify user lands on forgot your password page after clicking the link', async () => {
-        // 1. Launch facebook.com
-        await browser.url('https://www.facebook.com/');
-
-        // 2. Click "Forgot password?"
-        //a[contains(text() , 'word')]
-        const forgotPasswordLink = await $('*=word');
-        await forgotPasswordLink.click();
-
-        await browser.pause(1000);
-
-        // 3. Verify user lands on forgot your password page
-        /**
-         * if "Find your account" heading is displayed means we are on Forgot your password page
-         * if url contains "www.facebook.com/login/identify/" means we are on Forgot your password page
-         * if pageTitle starts with "Forgot password" means we are on Forgot your password page
-         */
-        // if "Find your account" heading is displayed means we are on Forgot your password page
-        const pageHeading = await $('h2[class=uiHeaderTitle]');
-        const isHeadingDisplayed = await pageHeading.isDisplayed();
-        expect(isHeadingDisplayed, 'Heading: We are not on Forgot password page').to.be.true;
-
-        // if url contains "www.facebook.com/login/identify/" means we are on Forgot your password page
-        const currentUrl = await browser.getUrl();
-        const isUrlContain = currentUrl.includes('www.facebook.com/login/identify/');
-        expect(isUrlContain, 'Url: We are not on Forgot password page').to.be.true;
-
-        // if pageTitle starts with "Forgot password" means we are on Forgot your password page
-        const pageTitle = await browser.getTitle();
-        const isTitleStartsWith = pageTitle.startsWith('Forgot password');
-        expect(isTitleStartsWith, 'Title: We are not on Forgot password page').to.be.true;
-    })
-
-
-});
+// Link
+/**
+ *      always have a-tag
+ *      text of a link is called Link-Text
+ *      after clicking the link, user should land on which webPage that is defined in href-attribute.
+ * 
+ * 
+ * 
+ * <a href="https://messenger.com/" title="Check out Messenger.">
+ *  Messenger
+ * </a>
+ * Text of a-tag = Messenger
+ * 
+ */
